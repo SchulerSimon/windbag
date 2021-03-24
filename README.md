@@ -122,14 +122,14 @@ drive to the [left|right]
 ```
 
 ### concepts `{type}`
-`{name}` means that we want to reuse the concept of name. This should evaluate into exactly one sentence/subsentence that contains name
+`{weather}` means that we want to reuse the concept of weather. This should evaluate into exactly one sentence/subsentence that contains weather
 ```
 __weather = [hot|cold|mild|sunny|cloudy|freezing]
 
 today is a {weather} day
 -> today is a [hot|cold|mild|sunny|cloudy|freezing] day
 ``` 
-concepts follow the same syntax as presented above. 
+They start with two underscores. They also allow the syntax of optionals and choices.
 
 
 ## requirements of the parser
@@ -151,7 +151,7 @@ x [a|[b|c]]
 ```
 __animal = [frog|cat|dog]
 __city = [Berlin|London|Paris]
-__topics = [statistic(s)|picture(s)|link(s)]
+__topics = [statistics|pictures|links]
 
 Show me [{animal}|{city}] {topic}
 ```

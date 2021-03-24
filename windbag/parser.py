@@ -26,13 +26,13 @@ class Parser:
         for intent, sentences in self.sentences.items():
             for s in sentences:
                 for x in iter(s):
-                    yield x, intent
+                    yield x.strip(), intent
     
     def random(self, intent:str="") -> str:
         if intent == "":
             intent = random.choice(list(self.sentences.keys()))
-        temp = random.choice(self.sentences[intent]).random() 
-        return temp, intent
+        temp = random.choice(self.sentences[intent]).random()
+        return temp.strip(), intent
 
     def tree(self, intent:str="") -> None:
         if intent == "":
