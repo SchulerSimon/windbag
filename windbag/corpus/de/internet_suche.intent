@@ -1,0 +1,8 @@
+__ort = [amazon|wikipedia|google|youtube|spottify|facebook|reddit|netflix|twitch|twitter|instagram]
+__topic = [zweiter weltkrieg|staubsauger|lets plays|videos|streams|filmen|beiträgen|tweets|bildern|songs|musik]
+
+--internet_suche
+kannst du auf {ort} nach {topic} suchen
+was sagt {ort} zu {topic}
+such (mal) [in|auf] {ort} nach {topic}
+[zeig mir|such nach] {topic} [auf|bei] {ort}

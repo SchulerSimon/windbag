@@ -1,0 +1,11 @@
+# first we define concepts (concepts start with __)
+__place = [amazon|wikipedia|google|youtube|spottify|facebook|reddit|netflix|twitch|twitter|instagram]
+__topic = [oranges|vacuums|lets plays|videos|streams|films|posts|tweets|pictures|songs|music]
+
+# then we give a name for the intent (intent names start with --)
+--internet_search
+# and then we give example sentences in the script-like format
+[could|would] you ([please|pls]) search for {topic} [in|at] {place}
+what dose {place} say [to|about] {topic}
+([please|pls]) look up {topic} [in|at] {place}
+([please|pls]) show me {topic} [in|at] {place}

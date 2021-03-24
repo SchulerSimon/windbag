@@ -1,0 +1,7 @@
+__operationen = [+|-|*|/|plus|minus|mal|(geteilt) durch|modulo|hoch]
+__zahlen = [1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|18|22|76|49|92|45|28|382|100|993|1002|1234|9999]
+
+--rechnen
+[kannst du (mir) sagen|sag (mir) mal] [wie viel|was] {zahlen} {operationen} {zahlen} ist
+[rechne|berechne] (mir) (bitte) (mal) {zahlen} {operationen} {zahlen} (aus)
+[wie viel|was] ist {zahlen} {operationen} {zahlen}

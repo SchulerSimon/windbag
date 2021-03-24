@@ -1,0 +1,17 @@
+__topic = [bilder|haustiere|mathematik|rechnen|wetter|fußball|fussball|witze]
+
+--bot_vorstellen
+[hast du einen|[wie|was] ist dein|dein] (richtige) name
+wie [[nennst du|nennt man|nennen [deine freunde|andere|die leute]] dich|heißt du|wie funktionierst du]
+(na) [wer|was] bist du (denn)
+kannst du mir deinen namen (noch mal) [verraten|sagen]
+bist du [ein|eine] [roboter|bot|computer|mensch|maschiene|pc|algorythmus]
+hast du ein gehirn
+
+--bot_funktionen
+was [kannst|machst] du (alles)
+(wobei) kannst du [mir|mich] [helfen|hilfe leißten|unterstüzen]
+was kann [ich|man] dich fragen
+worauf [kannst|weißt] du antworten
+welche fragen kannst du beantworten
+kannst du mir [bei|über] {topic} [etwas erzählen|helfen]

@@ -1,0 +1,16 @@
+__wochentage = [montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag]
+__tag = [heute|morgen|übermorgen]
+__date = [12.12.2090|31.03.|07.08.|2021|2022|2023|31.12.3999]
+__hours = [1:00|2:00|3:00|4:00|5:00|6:00|7:00|8:00|9:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00|19:00|20:00|21:00|22:00|23:00|24:00]
+
+--datum
+[was für ein|welches|welchen][datum|tag|wochentag|jahr|monat] haben wir (heute) (nochmal)
+was [ist|haben wir] [[{tag}|(am){wochentage}]|gerade] für ein [datum|tag|wochentag]
+wie viele [tage|wochen|monate|jahre] (sind es) (noch) bis (zum) {date}
+wann ist (endlich(wieder)) {wochentage}
+
+--zeit
+[was für eine|welche][zeit|uhrzeit] haben wir ([gerade|jetzt|(gleich) nochmal])
+wie spät ist es ([gerade|in einer (halben) stunde])
+wie lange ((dauert es) noch) bis es {hours} (uhr) ist
+welche [zeit|uhrzeit] haben wir ([gerade|jetzt|gleich|nochmal])

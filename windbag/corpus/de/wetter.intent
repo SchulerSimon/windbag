@@ -1,0 +1,9 @@
+__tag = [heute|morgen|übermorgen|(am) montag|(am) dienstag|(am) mittwoch|(am) donnerstag|(am) freitag|(am) samstag|(am) sonntag]
+
+--wetter
+wie wird das wetter ({tag})
+welches wetter haben wir {tag}
+wird [es|das wetter] {tag} [regnen|nieseln|schneien|kalt|warm|kälter|wärmer|schön|windig|heiß|klar]
+werden wir ({tag}) blauen himmel haben
+wie [kalt|warm|heiß] wird [es|das wetter] {tag}
+(wann) hört es ({tag}) auf zu [regnen|schneien]
