@@ -1,5 +1,5 @@
 import pathlib
-import windbag.parser as parser
+from windbag import parser
 
 if __name__ == "__main__":
     p = parser.FileParser()

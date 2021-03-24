@@ -50,7 +50,7 @@ please keep in mind that the goal is **not to produce sentences that are super d
 ## example usage
 ### parsing lists of sentences
 ```python
-import windbag.parser as parser
+from windbag import parser
 p = parser.ListParser()
 p.parse(["drive to the [left|right]", "why so (terribly) serious"], intent="some_intent_name")
 # yields one of the possible sentences
@@ -59,7 +59,7 @@ print(p.random())
 
 ### parsing from files in a directory
 ```python
-import windbag.parser as parser
+from windbag import parser
 p = parser.FileParser()
 # searches for all *.intent files in that directory
 p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
@@ -69,7 +69,7 @@ print(p.random())
 
 ### iterating over all possible sentences
 ```python
-import windbag.parser as parser
+from windbag import parser
 p = parser.FileParser()
 p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
 # yields ALL the sentences (carefull, might me a LOT)
@@ -79,7 +79,7 @@ for output in iter(p):
 
 ### show the tree of parsed sentences
 ```python
-import windbag.parser as parser
+from windbag import parser
 p = parser.ListParser()
 p.parse(["drive to the [left|right]", "why so (terribly) serious"], intent="some_intent_name")
 # prints a tree like structure of all the parsed sentences
