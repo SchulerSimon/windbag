@@ -65,8 +65,6 @@ p = parser.FileParser()
 p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
 # yields one of the possible sentences
 print(p.random()) 
-# yields one of the possible sentences, followed by --intent_name
-print(p.random(print_intent=True)) 
 ```
 
 ### iterating over all possible sentences
@@ -103,7 +101,7 @@ p.tree()
 ```
 
 ## syntax
-Now its probably a good idea to define the syntax a little better. 
+Now it is probably a good idea to define the syntax a little better. 
 
 Lets define some **operators**:
 

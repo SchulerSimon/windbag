@@ -3,11 +3,15 @@ import windbag.parser as parser
 
 if __name__ == "__main__":
     p = parser.FileParser()
-    p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
+    p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "de").absolute())
 
-    for x in range(10):
-        print(p.random())
+    print(p.random())
 
+    for x in iter(p):
+        print(x)
+        break
+
+    
     # path = pathlib.Path(__file__).parent.joinpath("output.txt")
     # with open(path, "w") as f:
     #     for x in iter(p):
