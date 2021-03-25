@@ -169,7 +169,7 @@ why ([so serious|are you happy])
 -> why are you happy # more like it
 ```
 
-## wrong syntx
+## wrong syntax
 The next thing to look at is when the parser should not parse input. 
 
 **Opening brackets should always be closed**
