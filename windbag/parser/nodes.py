@@ -30,6 +30,15 @@ class Sentence(Node):
         return "".join([n.random() for n in self.nodes])
 
     def parse(self, _t: Iterable) -> Iterable:
+        """parses an iterable of chars
+
+        Args:
+            _t (Iterable): chars to parse by this method
+
+        Raises:
+            ParserError: when _t contains a char that is not in the vocabulary defined by the grammer
+            ParserError: when a closing bracket or | is found with no matching opening bracket
+        """
         while (t := next(_t, None)) != None:
             if t not in vocabular:
                 raise ParserError(_t, f"symbol '{t}' not allowed")
@@ -62,6 +71,17 @@ class Literal(Node):
         return self.data + " "
 
     def parse(self, _t: Iterable) -> Iterable:
+        """parses a Literal, stops parsing when one of the terminals is the next item
+
+        Args:
+            _t (Iterable): the iterable of chars to parse
+
+        Raises:
+            ParserError: when the given symbol is not allowed in a literal
+
+        Returns:
+            Iterable: iterable without the literal, containing the item that stopped parsing for literal
+        """
         while (t := next(_t, None)) != None:
             if t not in vocabular:
                 raise ParserError(_t, f"symbol '{t}' not allowed in literal")
@@ -91,6 +111,19 @@ class Optional(Node):
             return "".join([n.random() for n in self.nodes])
 
     def parse(self, _t: Iterable) -> Iterable:
+        """parses an Optional, stopps when the closing bracket ) is reached. 
+
+        Args:
+            _t (Iterable): the iterable of chars to parse
+
+        Raises:
+            ParserError: if the next symbol is not allowed
+            ParserError: if the next symbol is unexpected, (closing brackets except for ")")
+            ParserError: if the iterable is empty and no closing bracket was found
+
+        Returns:
+            Iterable: the iterable of chars without the contents of this optional
+        """
         while (t := next(_t, None)) != None:
             if t not in vocabular:
                 raise ParserError(_t, f"symbol '{t}' not allowed")
@@ -125,6 +158,19 @@ class Choices(Node):
         return random.choice(self.nodes).random()
 
     def parse(self, _t: Iterable) -> Iterable:
+        """parses a Choices structure, denoted by [a|b]
+
+        Args:
+            _t (Iterable): iterable of chars to be parsed
+
+        Raises:
+            ParserError: if the next symbol is not allowed
+            ParserError: if the next symbol is a closing bracket (except "]")
+            ParserError: if the iterable is empty and no closing bracket was found
+
+        Returns:
+            Iterable: the iterable of chars without the contents of this Choices
+        """
         while (t := next(_t, None)) != None:
             if t not in vocabular:
                 raise ParserError(_t, f"symbol '{t}' not allowed")
@@ -155,6 +201,18 @@ class Choice(Node):
         return "".join([n.random() for n in self.nodes])
 
     def parse(self, _t: Iterable) -> Iterable:
+        """parses a choice (a choice is one of the options in choices)
+
+        Args:
+            _t (Iterable): iterable of chars to be parsed
+
+        Raises:
+            ParserError: if the next symbol is not allowed
+            ParserError: if the next symbol is a closing bracket (except "]")
+
+        Returns:
+            Iterable: the iterable of chars without the contents of this Choices
+        """
         while (t := next(_t, None)) != None:
             if t not in vocabular:
                 raise ParserError(_t, f"symbol '{t}' not allowed")

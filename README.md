@@ -1,6 +1,10 @@
 # windbag
-*windbag: (slang) - an exhaustively talkative person; person who talks too much*
+#### (slang) - an exhaustively talkative person; person who talks too much
 
+windbag is a language that allowes you to script lots of example input sentences. The goal is to generate training-sets for intent recognition. It comes with a parser and its own file-format. Have a look at the [corpus](windbag/corpus/) if you are interested in writingn your own scripts
+
+<details>
+<summary>Motivation</summary>
 I was looking into creating datasets to train a NN to extract the **intent** of given sentences. I was trying to create large sets of sentences that reflect possible ways to issue a command or ask a question. For example: "Show me a black and white picture of a cat", "give pictures of Londons east", "close the door in the kitchen", "switch off the tv" and many more. 
 
 Ill be using [context-free grammar (CFG)](https://en.wikipedia.org/wiki/Context-free_grammar)s and [parser](https://en.wikipedia.org/wiki/Parsing#Parser)s. Great way for me to refresh my knowledge from university.
@@ -46,8 +50,9 @@ what dose {place} say [to|about] {topic}
 ```
 
 please keep in mind that the goal is **not to produce sentences that are super duper correct**. The goal is to have a tool to easily generate lots of examples of what users might input into a chatbot/helperbot.
+</details>
 
-## example usage
+## usage
 ### parsing lists of sentences
 ```python
 from windbag import parser
@@ -169,7 +174,7 @@ why ([so serious|are you happy])
 -> why are you happy # more like it
 ```
 
-## wrong syntx
+## wrong syntax
 The next thing to look at is when the parser should not parse input. 
 
 **Opening brackets should always be closed**
@@ -194,8 +199,10 @@ a ( )
                           ~~~
 ```
 
-
 ## definition of the grammer
+<details>
+<summary>grammer</summary>
+
 if you never heard of Context-free grammars, have a look at the [wikipedia article](https://en.wikipedia.org/wiki/Context-free_grammar)
 
 
@@ -208,11 +215,11 @@ with
 **V** = {"(", ")", "[", "]", "{", "}"}
 
 **P** = {
-1: *S* -> *S* *S*
-2: *S* -> (*S*)
-3: *S* -> [*K*]
-4: *S* -> {*S*}
-5: *S* -> *any number of symbols of* **T**
+1: *S* -> *S* *S*,
+2: *S* -> (*S*),
+3: *S* -> [*K*],
+4: *S* -> {*S*},
+5: *S* -> *any number of symbols of* **T**,
 6: *K* -> *S* | *S*
 }
 
@@ -226,14 +233,19 @@ S -> S S -> show S -> show S S -> show (S) S -> show (me) S -> show (me) a pictu
 ```
 First we use the first relation to go from "*S*" to "*S* *S*", then we use 4th relation to go from "*S* *S*" to "show *S*", then we use the second relation to go from "show *S*" to "show *S* *S*" and so forth.  
 
+</details>
+
 ## implementation
-Because the grammar **G** is a [LL(k)](https://en.wikipedia.org/wiki/LL_parser) grammer, we can use a predictive LL-Parser to parse the input. I chose to use a recursive-predictive parser. You can take a look at [parser.py](sentence_expander/parser.py)
+Because the grammar **G** is an [LL(k)](https://en.wikipedia.org/wiki/LL_parser) grammer, we can use a predictive LL-Parser to parse the input. I chose to use a recursive-predictive parser. You can take a look at [parser.py](sentence_expander/parser.py)
 
 Another challange was to prevent huge amounts of memory usage. Especially when you work with sentences that are long and have lots of choices etc. it might become a problem to store everything in memory. So to account for that I implemented all classes as iterators. So we dont need to store all the output, but can rather generated it when needed.
 
 I also wanted to have a random function, that spits out a randomly generated sentence (of the possible ones). 
 
 ## performance
+
+<details>
+<summary>performance</summary>
 
 ### parsing
 For parsing the runtime should be in ***O(n)*** with n beeing the number of characters in the input.
@@ -243,6 +255,8 @@ For generating sentences the runtime should be ***O(log(k))*** (same as binary s
 
 ### memory usage
 Due to the fact that sentences are represented by a tree-like structure internally, the memory usage should be around ***O(k)*** with k beeing the number of operators in the input. This is not the case when you store all the possible outputs of the parsed sentence. That should be more like ***O(n^K)*** with n beeing the number of characters and k beeing the number of operators in the input.
+
+</details>
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
