@@ -67,9 +67,11 @@ print(p.random())
 from windbag import parser
 p = parser.FileParser()
 # searches for all *.intent files in that directory
-p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
+intent_dict = p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
 # yields one of the possible sentences
-print(p.random()) 
+print(p.random())
+# returns a dict of intent:list(sentences)
+print(intent_dict)
 ```
 
 ### iterating over all possible sentences

@@ -1,6 +1,7 @@
 import os
 import random
 import pathlib
+from copy import deepcopy
 from typing import Dict, List, Tuple
 
 from .parser_error import ParserError
@@ -70,7 +71,7 @@ class Parser:
                 print(s, "--" + intent)
 
 class ListParser(Parser):
-    def parse(self, _in: List, intent:str) -> None:
+    def parse(self, _in: List, intent:str) -> Dict[str, List[Sentence]]:
         """parses from a list of strings, each entry is parsed as new sentence
 
         Args:
@@ -88,13 +89,14 @@ class ListParser(Parser):
                 self._parse(s, intent)
         else:
             raise ValueError("provide a list of strings")
+        return deepcopy(self.sentences)
 
 class FileParser(Parser):
     def __init__(self) -> None:
         super().__init__()
         self.concepts = {}
 
-    def parse(self, _in: pathlib.Path):
+    def parse(self, _in: pathlib.Path) -> Dict[str, List[Sentence]]:
         """parses all *.intent files in the given directory
 
         Args:
@@ -123,6 +125,7 @@ class FileParser(Parser):
                         if current_intent == "":
                             raise ValueError("provide an intent befor sentences, you do this with --intent_name", f.name)
                         self._parse(l, current_intent, concepts)
+        return deepcopy(self.sentences)
         
     def _parse_concept(self, _line: str) -> Tuple[str, str]:
         """parses a concept from a line that starts with __
