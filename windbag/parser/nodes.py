@@ -111,7 +111,7 @@ class Optional(Node):
             return "".join([n.random() for n in self.nodes])
 
     def parse(self, _t: Iterable) -> Iterable:
-        """parses an Optional, stopps when the closing bracket ) is reached. 
+        """parses an Optional, stopps when the closing bracket ) is reached.
 
         Args:
             _t (Iterable): the iterable of chars to parse

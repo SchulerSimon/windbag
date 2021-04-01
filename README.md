@@ -67,11 +67,11 @@ print(p.random())
 from windbag import parser
 p = parser.FileParser()
 # searches for all *.intent files in that directory
-intent_dict = p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
+sentence_dict = p.parse(pathlib.Path(__file__).parent.joinpath("windbag", "corpus", "en").absolute())
 # yields one of the possible sentences
 print(p.random())
 # returns a dict of intent:list(sentences)
-print(intent_dict)
+print(sentence_dict)
 ```
 
 ### iterating over all possible sentences
@@ -105,6 +105,59 @@ p.tree()
    |-> Optional()
    |   |-> Literal(terribly)
    |-> Literal(serious) --some_intent_name
+```
+
+### using the tokenizer
+```python
+from windbag import parser
+from windbag import tokenizer
+
+p = parser.ListParser()
+sentence_dict = p.parse(
+    ["drive to the [left|right]", "why so (terribly) serious"],
+    intent="some_intent_name",
+)
+
+t = tokenizer.Tokenizer()
+for intent, sentences in sentence_dict.items():
+    t.fit_on_sentences(sentences)
+
+print(t.word_index)
+# {'__unk__': 1, 'drive': 2, 'to': 3, 'the': 4, 'left': 5, 'right': 6, 'why': 7, 'so': 8, 'terribly': 9, 'serious': 10}
+print(t.text_to_sequence("drive strait ahead"))  # [2, 1, 1]
+print(t.text_to_sequence("that is terribly sad"))  # [1, 1, 9, 1]
+print(t.text_to_sequence("asdfas"))  # [1]
+```
+
+If you want, you can use the tokenizer a little more sophisticated. It is able to replace certain regular expressions with given tokens. This enables the tokenizer to output identical tokenlists for `please calculate 345 * 99873495` and `please calculate 1 + 2`. This could also enable to match time, date, numbers, telephone numbers, etc. 
+
+```python
+p = parser.ListParser()
+sentence_dict = p.parse(
+    [
+        "([please|pls]) calculate "
+        + "[1|2|3|4|5|6|7|8|9|10] "
+        + "[+|-|*|/|plus|minus|times|(divided) by] "
+        + "[1|2|3|4|5|6|7|8|9|10] "
+        + "(for me)"
+    ],
+    "some_intent",
+)
+regex_replace: OrderedDict = OrderedDict(
+    {
+        "__number__": r"-?\d+",
+        "__math_operator__": r"\+|\-|\*|\/",
+    }
+)
+t = tokenizer.Tokenizer(regex_replace=regex_replace)
+for intent, sentences in sentence_dict.items():
+    t.fit_on_sentences(sentences)
+
+print(t.word_index)
+# {'__unk__': 1, 'please': 2, 'pls': 3, 'calculate': 4, '__number__': 5, '__math_operator__': 6, 'plus': 7, 'minus': 8, 'times': 9, 'divided': 10, 'by': 11, 'for': 12, 'me': 13}
+print(t.text_to_sequence("please calculate 345 * 99873495")) #[2, 4, 5, 6, 5]
+print(t.text_to_sequence("please calculate 12 times 100")) #[2, 4, 5, 9, 5]
+print(t.text_to_sequence("please calculate 74567 / 665")) #[2, 4, 5, 6, 5]
 ```
 
 ## syntax

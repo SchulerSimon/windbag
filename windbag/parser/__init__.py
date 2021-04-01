@@ -7,11 +7,12 @@ from typing import Dict, List, Tuple
 from .parser_error import ParserError
 from .nodes import Sentence
 
+
 class Parser:
     def __init__(self) -> None:
-        self.sentences:Dict[str, List[Sentence]] = {}
+        self.sentences: Dict[str, List[Sentence]] = {}
 
-    def _parse(self, _in: str, intent:str, concepts: dict = {}) -> None:
+    def _parse(self, _in: str, intent: str, concepts: dict = {}) -> None:
         """parses a string (_in), matches it with the given intent, and substitutes concepts.
 
         Args:
@@ -24,7 +25,7 @@ class Parser:
         self._add(sentence=node, intent=intent)
         node.parse(iter(_in))
 
-    def _add(self, sentence:Sentence, intent:str) -> None:
+    def _add(self, sentence: Sentence, intent: str) -> None:
         """adds a parsed sentence object to this object
 
         Args:
@@ -34,15 +35,15 @@ class Parser:
         if intent in self.sentences.keys():
             self.sentences[intent].append(sentence)
         else:
-            self.sentences.update({intent:[sentence]})
+            self.sentences.update({intent: [sentence]})
 
     def __iter__(self) -> str:
         for intent, sentences in self.sentences.items():
             for s in sentences:
                 for x in iter(s):
                     yield x.strip(), intent
-    
-    def random(self, intent:str="") -> str:
+
+    def random(self, intent: str = "") -> str:
         """returns a randomly generated sentence form the parsed sentences
 
         Args:
@@ -56,7 +57,7 @@ class Parser:
         temp = random.choice(self.sentences[intent]).random()
         return temp.strip(), intent
 
-    def tree(self, intent:str="") -> None:
+    def tree(self, intent: str = "") -> None:
         """prints a tree of the sentences this object holds
 
         Args:
@@ -70,8 +71,9 @@ class Parser:
             for s in self.sentences[intent]:
                 print(s, "--" + intent)
 
+
 class ListParser(Parser):
-    def parse(self, _in: List, intent:str) -> Dict[str, List[Sentence]]:
+    def parse(self, _in: List, intent: str) -> Dict[str, List[Sentence]]:
         """parses from a list of strings, each entry is parsed as new sentence
 
         Args:
@@ -91,6 +93,7 @@ class ListParser(Parser):
             raise ValueError("provide a list of strings")
         return deepcopy(self.sentences)
 
+
 class FileParser(Parser):
     def __init__(self) -> None:
         super().__init__()
@@ -105,7 +108,11 @@ class FileParser(Parser):
         Raises:
             ValueError: if the file is not properly formatted
         """
-        _all = [_in.joinpath(f_name) for f_name in os.listdir(_in) if f_name.endswith(".intent")]
+        _all = [
+            _in.joinpath(f_name)
+            for f_name in os.listdir(_in)
+            if f_name.endswith(".intent")
+        ]
         for _path in _all:
             concepts: dict = {}
             with open(_path) as f:
@@ -118,15 +125,18 @@ class FileParser(Parser):
                         continue
                     elif l.startswith("__"):
                         name, concept = self._parse_concept(l)
-                        concepts.update({name:concept})
+                        concepts.update({name: concept})
                     elif l.startswith("--"):
                         current_intent = l[2:].strip()
                     else:
                         if current_intent == "":
-                            raise ValueError("provide an intent befor sentences, you do this with --intent_name", f.name)
+                            raise ValueError(
+                                "provide an intent befor sentences, you do this with --intent_name",
+                                f.name,
+                            )
                         self._parse(l, current_intent, concepts)
         return deepcopy(self.sentences)
-        
+
     def _parse_concept(self, _line: str) -> Tuple[str, str]:
         """parses a concept from a line that starts with __
 
@@ -146,7 +156,7 @@ class FileParser(Parser):
         name = _line[0].strip()[2:]
         concept = _line[1].strip()
         if " " in name:
-            raise ParserError(None, f"whitespaces are not allowed in concept names: {name}")
+            raise ParserError(
+                None, f"whitespaces are not allowed in concept names: {name}"
+            )
         return name, concept
-
-

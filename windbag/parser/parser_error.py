@@ -11,4 +11,6 @@ class ParserError(Exception):
                     args[0] + f". Remaining input:'{self.remaining_input[:47]}...'"
                 )
             else:
-                super().__init__(args[0] + f". Remaining input:'{self.remaining_input}'")
+                super().__init__(
+                    args[0] + f". Remaining input:'{self.remaining_input}'"
+                )
